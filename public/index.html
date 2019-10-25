@@ -9,29 +9,42 @@
 <body>
     <h1>Fill out this form if you know what's good for you!</h1>
     <form name="myForm" id="myForm">
-        <label>Name:</label><input name='name'>
-        <label>Age:</label><input name="age">
-        <div>
-            <label>Favorite Color</label>
-            <input type="radio" name="favColor" value="blue"><label>Blue</lable>
-                <input type="radio" name="favColor" value="red"><label>Red</label>
-                <input type="radio" name="favColor" value="green"><label>Green</label>
+        <div class='row cell2'>
+            <span class='tag'><input name='name'><label>Name</label></span>
+            <span class='tag'><input name='age'><label>Age</label></span>
         </div>
-        <div>
-            <input type="checkbox" name="read"><label>I have read the instructions</label>
+        <div class="row">
+            <span class="tag2"> <label>Favorite Color</label>
+                <div>
+                    <input type="radio" name="favColor" value="blue"><label>Blue</label>
+                </div>
+                <div>
+                    <input type="radio" name="favColor" value="red"><label>Red</label>
+                </div>
+                <div>
+                    <input type="radio" name="favColor" value="green"><label>Green</label>
+                </div>
+            </span>
         </div>
-        <div>
-            <p>Who is the ACTUAL worst?</p>
-            <select name="worst">
-                <option value="Cailou">Cailou</option>
-                <option value="politicians">ANY politician</option>
-                <option value="salespeople">Sales People</option>
-            </select>
+        <div class="row cell1">
+            <span class="checkLabel"><input type="checkbox" name="read"><label>I have read the
+                    instructions</label></span>
         </div>
-        <div>
-            <input type="submit" value="Submit">
+        <div class="row cell1">
+            <span class="tag"><label>Who is the ACTUAL worst?</label>
+                <select name="worst">
+                    <option value="Cailou">Cailou</option>
+                    <option value="politicians">ANY politician</option>
+                    <option value="salespeople">Sales People</option>
+                </select>
+            </span>
+        </div>
+        <div class="row controls">
+            <span class="tag2"><input type="submit" value="Submit"></span>
         </div>
     </form>
+    <div id="statusMessage"></div>
+
 
     <script type="text/javascript">
         // How in the world do we get the form to do stuff?
@@ -52,13 +65,12 @@
 
             const options = {
                 method: 'POST',
-                body: data
+                body: JSON.stringify(data),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
             };
-
-            var request = new XMLHttpRequest();
-            request.open("POST", "./form");
-            request.send(data);
-            return;
 
 
             fetch(url, options)
@@ -67,9 +79,16 @@
                 })
                 .then((data) => {
                     console.log('data: ', data);
-                }, (err) => {
-                    console.error('Fetch did not work: ', err);
-                });
+                    const statusMessage = document.getElementById('statusMessage');
+                    statusMessage.textContent = data.thanks;
+                    statusMessage.style.backgroundColor = data.color;
+                    if (data.color === "#000099") {
+                        statusMessage.style.color = "#FFFFFF";
+                    }
+                })
+                .catch((err) => {
+                    console.log('Fetch did not work: ', err);
+                })
 
         });
 

@@ -1,3 +1,43 @@
-form > div {
-    margin: 10px auto;
+.tag {
+    display: flex;
+    flex-flow: column;
+
+}
+
+.tag2 {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+}
+
+.tag2>label {
+    width: 100%;
+}
+
+.checkLabel>label {
+    margin-left: 2%;
+}
+
+.row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin-bottom: 1%;
+}
+
+
+.cell2 {
+    max-width: 50%;
+}
+
+.cell3 {
+    max-width: 75%;
+}
+
+.cell1 {
+    max-width: 25%;
+}
+body {
+    max-width: 800px;
+    margin: 0 auto;
 }
